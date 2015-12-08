@@ -12,13 +12,16 @@
 ros::NodeHandle  nh;
 
 //小电机请将数值调小
-int speed1=100;//小车速度控制0~255，数值越大，速度越快
+int speed1=64;//小车速度控制0~255，数值越大，速度越快
 
-int dir1 = 4;
-int dir2 = 7;
+int enable1 = 22;
+int enable2 = 23;
 
-int pwm1 = 5;
-int pwm2 = 6;
+int dir1 = 24;
+int dir2 = 25;
+
+int pwm1 = 8;
+int pwm2 = 9;
 
 void goforward();
 void goleft();
@@ -75,6 +78,9 @@ void setup(){
   //led for test
   pinMode(13, OUTPUT);
   
+  digitalWrite(enable1,HIGH);
+  digitalWrite(enable2,HIGH);
+  
   nh.initNode();
   nh.subscribe(sub);
   
@@ -111,7 +117,10 @@ void goright(){
 }
 
 void stopcommand(){
+  
  analogWrite(pwm1,0);
  analogWrite(pwm2,0);
+ digitalWrite(enable1,LOW);
+  digitalWrite(enable2,LOW);
 }
 
